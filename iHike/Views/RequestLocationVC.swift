@@ -9,26 +9,28 @@
 import UIKit
 import CoreLocation
 import ProgressHUD
-import Firebase
+import NotificationBannerSwift
+import Parse
 
 class RequestLocationVC: UIViewController,CLLocationManagerDelegate {
 
-    var user: User!
 
     var locationTxt = ""
-    
+    var status = ""
     // MARK: - Location
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        locationManager.delegate = self
+
 
     }
     override func viewWillAppear(_ animated: Bool) {
         
     }
+    @IBOutlet var exploreBtn: UIButton!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -65,28 +67,65 @@ class RequestLocationVC: UIViewController,CLLocationManagerDelegate {
     @IBOutlet weak var accessBtn: UIButton!
     
     @IBAction func exploreBtn(_ sender: Any) {
+        
         self.reachability()
+        self.checkStatus()
         
-        var location = String()
-        location = self.locationTxt
-        let newDate = dateFormatter().string(from: Date())
+        if status == "Not Determined" && status == "Denied" && status == "Restricted"  {
+            
+            let alertVC = UIAlertController(title: "Location Access is not enabled", message: "iHike  cannot work without using your geolocation. \n Please first enable location in Settings to proceed", preferredStyle: .actionSheet)
+            alertVC.addAction(UIAlertAction(title: "Open Settings", style: .default) { value in
+                let path = UIApplicationOpenSettingsURLString
+                if let settingsURL = URL(string: path), UIApplication.shared.canOpenURL(settingsURL) {
+                    UIApplication.shared.openURL(settingsURL)
+                }
+            })
+            alertVC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            self.present(alertVC, animated: true, completion: nil)
+            
+            return
+            
+        }
         
-        updateUser(withValues: [kCURRENTUSERLOCATION: location, kUPDATEDAT: newDate], withBlock: { (success) in
-            if success {
+        // save username/image in user profile
+        let user = PFUser.current()!
+        user["location"] = locationTxt
+        
+        user.saveInBackground (block: { (success, error) -> Void in
+            if success{
+                ProgressHUD.dismiss()
+                // hide keyboard
+                self.view.endEditing(true)
+                
+                // remember logged in user
+                UserDefaults.standard.set(user.username, forKey: "username")
+                UserDefaults.standard.synchronize()
                 ProgressHUD.dismiss()
                 
-                self.user = Auth.auth().currentUser
-                self.view.endEditing(false)
+                print("Elvis: Location is \(String(describing: self.locationTxt))")
                 
-                print("Elvis: Location is \(String(describing: location))")
+                                //Proceed to Home Screen
+                                let initialViewController = UIStoryboard.initialViewController(for: .main)
+                                self.view.window?.rootViewController = initialViewController
+                                self.view.window?.makeKeyAndVisible()
                 
-                //Proceed to Home Screen
-                let initialViewController = UIStoryboard.initialViewController(for: .main)
-                self.view.window?.rootViewController = initialViewController
-                self.view.window?.makeKeyAndVisible()
+                
+                
+                
+            } else {
+                
+                // show alert message
+                let banner = StatusBarNotificationBanner(title:  error!.localizedDescription, style: .danger)
+                banner.show()
+                
+                
                 
             }
+            
         })
+        
+        
     
     }
     
@@ -95,17 +134,6 @@ class RequestLocationVC: UIViewController,CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             switch(CLLocationManager.authorizationStatus()) {
             case .notDetermined, .restricted, .denied:
-                
-                let alertVC = UIAlertController(title: "Location Access is not enabled", message: "iHike  cannot work without using your geolocation. \n Please first enable location in Settings to proceed", preferredStyle: .actionSheet)
-                alertVC.addAction(UIAlertAction(title: "Open Settings", style: .default) { value in
-                    let path = UIApplicationOpenSettingsURLString
-                    if let settingsURL = URL(string: path), UIApplication.shared.canOpenURL(settingsURL) {
-                        UIApplication.shared.openURL(settingsURL)
-                    }
-                })
-                alertVC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                
-                self.present(alertVC, animated: true, completion: nil)
                 
                 print("No access")
                 
@@ -117,6 +145,7 @@ class RequestLocationVC: UIViewController,CLLocationManagerDelegate {
         } else {
             print("Location services are not enabled")
         }
+        return
         
     }
     // MARK: Location Functions
@@ -142,6 +171,7 @@ class RequestLocationVC: UIViewController,CLLocationManagerDelegate {
                 let location = "\(city), \(country)"
                 
                 self.locationTxt = location
+                self.exploreBtn.isHidden = false
                 print(location)
             } else {
                 
@@ -154,5 +184,24 @@ class RequestLocationVC: UIViewController,CLLocationManagerDelegate {
         }
     }
     
+    
+    func checkStatus() {
+        let status: CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+        if status == .notDetermined {
+            self.status = "Not Determined"
+        }
+        if status == .denied {
+            self.status = "Denied"
+        }
+        if status == .restricted {
+            self.status = "Restricted"
+        }
+        if status == .authorizedAlways {
+            self.status = "Always Allowed"
+        }
+        if status == .authorizedWhenInUse {
+            self.status = "When In Use Allowed"
+        }
+    }
 
 }

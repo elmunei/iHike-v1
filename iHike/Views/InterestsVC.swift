@@ -7,13 +7,13 @@
 //
 
 import UIKit
-import Firebase
+import Parse
 import ProgressHUD
 import NotificationBannerSwift
 
 class InterestsVC: UIViewController {
 
-    var user: User!
+   
 
     @IBOutlet weak var nextBtn: UIBarButtonItem!
     @IBOutlet weak var trekker: ETRadioButton!
@@ -129,15 +129,15 @@ class InterestsVC: UIViewController {
         
         ProgressHUD.show("please wait...")
         
-//        if trekker.isSelected == false || biker.isSelected == false || runner.isSelected == false || walker.isSelected == false {
-//            let banner = StatusBarNotificationBanner(title: "Select at least one interest", style: .warning)
-//            banner.show()
-//            
-//            
-//            ProgressHUD.dismiss()
-//            
-//            return
-//        }
+        if trekker.isSelected == false && biker.isSelected == false && runner.isSelected == false && walker.isSelected == false {
+            let banner = StatusBarNotificationBanner(title: "Select at least one interest", style: .warning)
+            banner.show()
+            
+            
+            ProgressHUD.dismiss()
+            
+            return
+        }
         
         userInterests.append(interest1)
         userInterests.append(interest2)
@@ -145,25 +145,41 @@ class InterestsVC: UIViewController {
         userInterests.append(interest4)
         
         
-        let newDate = dateFormatter().string(from: Date())
         
-        updateUser(withValues: [kCURRENTUSERINTERESTS: userInterests, kUPDATEDAT: newDate]) { (success) in
-            
-            if success {
+        // save username/image in user profile
+        let user = PFUser.current()!
+        user["interests"] = userInterests
+        
+        user.saveInBackground (block: { (success, error) -> Void in
+            if success{
+                ProgressHUD.dismiss()
+                // hide keyboard
+                self.view.endEditing(true)
+                
+                // remember logged in user
+                UserDefaults.standard.set(user.username, forKey: "username")
+                UserDefaults.standard.synchronize()
                 ProgressHUD.dismiss()
                 
-                self.user = Auth.auth().currentUser
-                self.view.endEditing(false)
-                
-                print("Elvis: Interests are \(String(describing: self.userInterests))")
-                
-                //Proceed to Location Screen
+                //Proceed to Interests Screen
                 self.performSegue(withIdentifier: Constants.Segue.toAddLocation, sender: self)
+                
+                
+                
+                
+            } else {
+                
+                // show alert message
+                let banner = StatusBarNotificationBanner(title:  error!.localizedDescription, style: .danger)
+                banner.show()
+                
+                
                 
             }
             
-            
-        }
+        })
+        
+
 
     }
     

@@ -8,9 +8,9 @@
 
 import UIKit
 import MobileCoreServices
-import Firebase
 import ProgressHUD
 import NotificationBannerSwift
+import Parse
 
 
 
@@ -26,13 +26,15 @@ class EmailSignupVC: UIViewController, UINavigationControllerDelegate, UITextFie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        emailTextField.enablesReturnKeyAutomatically = true
         emailTextField.becomeFirstResponder()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         ProgressHUD.dismiss()
+        emailTextField.becomeFirstResponder()
+
     }
    
     
@@ -44,6 +46,12 @@ class EmailSignupVC: UIViewController, UINavigationControllerDelegate, UITextFie
     }
     
     @IBAction func nextBtnTapped(_ sender: Any) {
+        
+        performAction()
+        
+    }
+    
+    func performAction() {
         
         ProgressHUD.show("please wait...")
         
@@ -69,27 +77,8 @@ class EmailSignupVC: UIViewController, UINavigationControllerDelegate, UITextFie
             return
         }
         
-        let databaseReff = Database.database().reference().child("Users")
         
-        databaseReff.queryOrdered(byChild: "email").queryEqual(toValue: self.emailTextField.text!.trimmingCharacters(in: CharacterSet.whitespaces)).observe(.value, with: { snapshot in
-            if snapshot.exists(){
-                ProgressHUD.dismiss()
-                //User email exist
-                self.performSegue(withIdentifier: Constants.Segue.toLoginEmail, sender: self)
-                
-                
-            }
-            else{
-                
-                self.performSegue(withIdentifier: Constants.Segue.toCreateAccountEmail, sender: self)
-
-                
-            }
-            
-        })
-        
-        
-        
+        usernameIsTaken(email: emailTextField.text!.lowercased().trimmingCharacters(in: CharacterSet.whitespaces))
     }
     
     @IBAction func cancelBtnTapped(_ sender: Any) {
@@ -104,6 +93,37 @@ class EmailSignupVC: UIViewController, UINavigationControllerDelegate, UITextFie
     }
     
     // MARK: - Functions
+    
+    //Email Check if exists
+    func usernameIsTaken(email: String) -> Bool {
+        
+        //bool to see if username is taken
+        var exists: Bool = false
+        
+        let enteredEmailAddress = email
+        
+        // Then query and compare
+        let query: PFQuery = PFUser.query()!
+        query.whereKey("email", equalTo: enteredEmailAddress)
+        query.findObjectsInBackground(block: {
+            (objects, error) in
+            if error == nil {
+                if (objects!.count > 0){
+                    exists = true
+                    print("user email is exists")
+                    self.performSegue(withIdentifier: Constants.Segue.toLoginEmail, sender: self)
+
+                } else {
+                    print("user email is new ")
+                    self.performSegue(withIdentifier: Constants.Segue.toCreateAccountEmail, sender: self)
+                }
+            } else {
+                print("error")
+            }
+        })
+        
+        return exists
+    }
 
  // hide keyboard func
  @objc func hideKeyboard(_ recognizer : UITapGestureRecognizer) {
@@ -111,15 +131,11 @@ class EmailSignupVC: UIViewController, UINavigationControllerDelegate, UITextFie
  }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if (textField == emailTextField)
-        {
-            
-            emailTextField.resignFirstResponder()
-            return true
-        }
         
+        performAction()
+
         
-        return false
+        return true
     }
     
     
@@ -138,7 +154,7 @@ class EmailSignupVC: UIViewController, UINavigationControllerDelegate, UITextFie
     
     // regex restrictions for email textfield
     func validateEmail (_ email : String) -> Bool {
-        let regex = "[A-Z0-9a-z._%+-]{4}+@[A-Za-z0-9.-]+\\.[A-Za-z]{3}"
+        let regex = "[A-Z0-9a-z._%+-]{4}+@[A-Za-z0-9.-]+\\.[A-Za-z]"
         let range = email.range(of: regex, options: .regularExpression)
         let result = range != nil ? true : false
         return result

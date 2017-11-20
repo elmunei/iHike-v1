@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Firebase
+import UIKit
 
 private let dateFormat = "yyyyMMddHHmmss"
 
@@ -19,43 +19,7 @@ func dateFormatter() -> DateFormatter {
     return dateFormatter
 }
 
-func userDataFromCallerId(callerId: String, result: @escaping (_ callerName: String?, _ avatar: UIImage?) -> Void) {
     
-    var avatarImage = UIImage(named: "pp")
-    
-    firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: callerId).observeSingleEvent(of: .value, with: {
-        snapshot in
-        
-        
-        if snapshot.exists() {
-            
-            let userDictionary = ((snapshot.value as! NSDictionary).allValues as Array).first
-            
-            let fUser = FUser.init(_dictionary: userDictionary as! NSDictionary)
-            
-            
-            if fUser.avatar != "" {
-                imageFromData(pictureData: fUser.avatar, withBlock: { (image) in
-                    
-                    avatarImage = image!
-                    result(fUser.fullname, avatarImage)
-                    
-                })
-                
-            } else {
-                result(fUser.fullname, avatarImage)
-            }
-            
-            
-        } else {
-            
-            result("Unknown Caller", avatarImage)
-            
-        }
-        
-    })
-    
-}
 
 func maskRoundedImage(image: UIImage, radius: Float) -> UIImage {
     

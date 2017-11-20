@@ -7,15 +7,14 @@
 //
 
 import UIKit
-import FirebaseAuth
-import FirebaseDatabase
+import Parse
 import ProgressHUD
 import NotificationBannerSwift
 
 class MyProfileViewController: UIViewController,UITextFieldDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
 
     
-    var user: FUser!
+  
     var avatarImage: UIImage?
     // MARK: - Outlets
     
@@ -53,6 +52,15 @@ class MyProfileViewController: UIViewController,UITextFieldDelegate, UIImagePick
 
     @IBAction func nextBtnTapped(_ sender: Any) {
         
+    perfomAction()
+
+    }
+    
+    
+    //MARK: - Functions
+    
+    func perfomAction() {
+        
         ProgressHUD.show("Please wait...", interaction: false)
         
         // if no pp
@@ -64,7 +72,7 @@ class MyProfileViewController: UIViewController,UITextFieldDelegate, UIImagePick
             banner.show()
             
             ProgressHUD.dismiss()
-           
+            
             
             return
         }
@@ -83,7 +91,7 @@ class MyProfileViewController: UIViewController,UITextFieldDelegate, UIImagePick
             return
         }
         
-        let fieldTextLength = usernameTxt.text!.characters.count
+        let fieldTextLength = usernameTxt.text!.count
         
         if  fieldTextLength < 4  {
             let banner = StatusBarNotificationBanner(title: "Username is too short.", style: .danger)
@@ -103,63 +111,43 @@ class MyProfileViewController: UIViewController,UITextFieldDelegate, UIImagePick
             return
         }
         
-        updateUsername()
-
-
-    }
-    
-    
-    //MARK: - Functions
-    
-    func updateUsername() {
+        // save username/image in user profile
+        let user = PFUser.current()!
+        let avaData = UIImageJPEGRepresentation(pp.image!, 0.5)
+        let avaFile = PFFile(name: "ava.jpg", data: avaData!)
+        user["ava"] = avaFile
+        user.username = usernameTxt.text!.trimmingCharacters(in: CharacterSet.whitespaces)
         
-        if self.usernameTxt.text != nil && self.pp.image != nil {
-            
-            let username = usernameTxt.text?.trimmingCharacters(in: CharacterSet.whitespaces)
-            let newDate = dateFormatter().string(from: Date())
-            let image = UIImageJPEGRepresentation(pp.image!, 0.5)
-            let avatar = image!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-            
-            updateUser(withValues: [kUSERNAME: username!,kAVATAR: avatar, kUPDATEDAT: newDate], withBlock: { (success) in
-                if success {
-                    ProgressHUD.dismiss()
-                    
-                    self.usernameTxt.text = nil
-                    self.user = FUser.currentUser()
-                    self.view.endEditing(false)
-                    
-                    print("Elvis: Username is \(String(describing: username))")
-                    
-                    //Proceed to Interests Screen
-                    self.performSegue(withIdentifier: Constants.Segue.toAddInterests, sender: self)
-
-                    
-                }
-            })
-        }
-    }
-    
-    
-    func updateAvatarImage() {
-        
-        if self.avatarImage != nil {
-            
-            let image = UIImageJPEGRepresentation(pp.image!, 0.5)
-            let avatar = image!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-            
-            let newDate = dateFormatter().string(from: Date())
-            
-            updateUser(withValues: [kAVATAR: avatar, kUPDATEDAT : newDate], withBlock: { (success) in
+        user.saveInBackground (block: { (success, error) -> Void in
+            if success{
+                ProgressHUD.dismiss()
+                // hide keyboard
+                self.view.endEditing(true)
                 
-                if success {
-                    self.user = FUser.currentUser()
-                }
-            })
-        }
-        
+                // remember logged in user
+                UserDefaults.standard.set(user.username, forKey: "username")
+                UserDefaults.standard.synchronize()
+                ProgressHUD.dismiss()
+                
+                //Proceed to Interests Screen
+                self.performSegue(withIdentifier: Constants.Segue.toAddInterests, sender: self)
+                
+                
+                
+                
+            } else {
+                
+                // show alert message
+                let banner = StatusBarNotificationBanner(title:  error!.localizedDescription, style: .danger)
+                banner.show()
+                
+                
+                
+            }
+            
+        })
     }
     
-
     // hide keyboard func
     @objc func hideKeyboard(_ recognizer : UITapGestureRecognizer) {
         self.view.endEditing(true)
@@ -169,11 +157,9 @@ class MyProfileViewController: UIViewController,UITextFieldDelegate, UIImagePick
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         
-        if (textField == usernameTxt)
-        {
-            usernameTxt.resignFirstResponder()
-        }
-        return false
+       perfomAction()
+        
+        return true
         
     }
     
