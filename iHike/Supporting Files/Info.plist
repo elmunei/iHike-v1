@@ -56,6 +56,8 @@
 	<string>iHike needs to access your camera for you to share with your hiking community</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>iHike needs to know your location to help you discover things around you.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>iHike needs to know your location to help you discover things around you.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>iHike needs to access your microphone to help you interact with your  community.</string>
 	<key>UIBackgroundModes</key>

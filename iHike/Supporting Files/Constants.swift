@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import Firebase
-import FirebaseDatabase
+import Parse
+
 
 struct Constants {
     
@@ -32,7 +32,6 @@ struct Constants {
     
 }
 
-var firebase = Database.database().reference()
 let userDefaults = UserDefaults.standard
 
 //IDS and Keys

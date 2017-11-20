@@ -7,15 +7,14 @@
 //
 
 import UIKit
-import Firebase
 import FBSDKLoginKit
 import FBSDKCoreKit
 import ProgressHUD
 import NotificationBannerSwift
+import Parse
 
 class UsernameVC: UIViewController,UITextFieldDelegate {
     
-    var user: FUser!
     var avatarImage: UIImage?
     
     @IBOutlet weak var pp: UIImageView!
@@ -32,7 +31,7 @@ class UsernameVC: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Elvis: you are on UsernameVC")
-        self.getUserInfo()
+//        self.getUserInfo()
         
         // tap to hide keyboard
         let hideTap = UITapGestureRecognizer(target: self, action: #selector(UsernameVC.hideKeyboard(_:)))
@@ -68,7 +67,7 @@ class UsernameVC: UIViewController,UITextFieldDelegate {
             return
         }
         
-        let fieldTextLength = usernameTxt.text!.characters.count
+        let fieldTextLength = usernameTxt.text!.count
         
         if  fieldTextLength < 4  {
             let banner = StatusBarNotificationBanner(title: "Username is too short.", style: .danger)
@@ -88,36 +87,67 @@ class UsernameVC: UIViewController,UITextFieldDelegate {
             return
         }
         
-        self.updateUsername()
+        // save username in user profile
+        let user = PFUser.current()!
+        user.username = usernameTxt.text!.trimmingCharacters(in: CharacterSet.whitespaces)
+        
+        user.saveInBackground (block: { (success, error) -> Void in
+            if success{
+                ProgressHUD.dismiss()
+                // hide keyboard
+                self.view.endEditing(true)
+                
+                // remember logged in user
+                UserDefaults.standard.set(user.username, forKey: "username")
+                UserDefaults.standard.synchronize()
+                ProgressHUD.dismiss()
+                
+                //Proceed to Interests Screen
+                self.performSegue(withIdentifier: Constants.Segue.toAddInterests, sender: self)
+                
+                
+                
+                
+            } else {
+                
+                // show alert message
+                let banner = StatusBarNotificationBanner(title:  error!.localizedDescription, style: .danger)
+                banner.show()
+                
+                
+                
+            }
+            
+        })
         
     }
     
     //MARK: - Functions
     
     func updateUsername() {
-        
-        if self.usernameTxt.text != nil {
-            let username = usernameTxt.text
-            let newDate = dateFormatter().string(from: Date())
-            
-            updateUser(withValues: [kUSERNAME: username!, kUPDATEDAT: newDate], withBlock: { (success) in
-                if success {
-                    ProgressHUD.dismiss()
-                    
-                    self.usernameTxt.text = nil
-                    self.user = FUser.currentUser()
-                    self.view.endEditing(false)
-                    
-                    print("Elvis: Username is \(String(describing: username!))")
-                    
-                    //Proceed to Interests Screen
-                    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InterestsVC") as! InterestsVC
-                    
-                    self.present(vc, animated: true, completion: nil)
-                    
-                }
-            })
-        }
+//
+//        if self.usernameTxt.text != nil {
+//            let username = usernameTxt.text
+//            let newDate = dateFormatter().string(from: Date())
+//
+//            updateUser(withValues: [kUSERNAME: username!, kUPDATEDAT: newDate], withBlock: { (success) in
+//                if success {
+//                    ProgressHUD.dismiss()
+//
+//                    self.usernameTxt.text = nil
+//                    self.user = FUser.currentUser()
+//                    self.view.endEditing(false)
+//
+//                    print("Elvis: Username is \(String(describing: username!))")
+//
+//                    //Proceed to Interests Screen
+//                    let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InterestsVC") as! InterestsVC
+//
+//                    self.present(vc, animated: true, completion: nil)
+//
+//                }
+//            })
+//        }
     }
     
     // hide keyboard func
@@ -175,32 +205,32 @@ class UsernameVC: UIViewController,UITextFieldDelegate {
         }
         
     }
-    func getUserInfo() {
-        
-        self.user = FUser.currentUser()
-        
-        if user.objectId != FUser.currentId() {
-            
-        }
-        
-        let placeHolderImage = UIImage(named: "pp")
-        
-        self.pp.image = maskRoundedImage(image: placeHolderImage!, radius: Float(placeHolderImage!.size.width / 2))
-        
-        
-        
-        
-        if user.avatar != "" {
-            
-            imageFromData(pictureData: user.avatar, withBlock: {
-                image in
-                
-                self.pp.image = maskRoundedImage(image: image!, radius: Float(image!.size.width / 2))
-                //self.bg.image = bgImage(image: image!)
-            })
-            
-        }
-    }
+//    func getUserInfo() {
+//
+//        self.user = FUser.currentUser()
+//
+//        if user.objectId != FUser.currentId() {
+//
+//        }
+//
+//        let placeHolderImage = UIImage(named: "pp")
+//
+//        self.pp.image = maskRoundedImage(image: placeHolderImage!, radius: Float(placeHolderImage!.size.width / 2))
+//
+//
+//
+//
+//        if user.avatar != "" {
+//
+//            imageFromData(pictureData: user.avatar, withBlock: {
+//                image in
+//
+//                self.pp.image = maskRoundedImage(image: image!, radius: Float(image!.size.width / 2))
+//                //self.bg.image = bgImage(image: image!)
+//            })
+//
+//        }
+//    }
     
 }
 

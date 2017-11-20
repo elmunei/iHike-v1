@@ -6,11 +6,8 @@ target 'iHike' do
   use_frameworks!
 
   # Pods for iHike
-  pod 'Firebase/Core'
-  pod 'Firebase/Auth'
-  pod 'FirebaseUI'
-  pod 'Firebase/Database'
-  pod 'Firebase/Storage'
+  pod 'Parse'
+  pod 'ParseUI'
   pod 'ListPlaceholder'
   pod 'DTPagerController'
   pod 'NotificationBannerSwift'
@@ -19,7 +16,11 @@ target 'iHike' do
   pod 'FBSDKLoginKit'
   pod 'FacebookShare', :git => 'https://github.com/1amageek/facebook-sdk-swift'
   pod 'SDWebImage'
-  pod 'ALCameraViewController'
   pod 'SwiftGifOrigin', '~> 1.6.1'
-
+  pod 'YPImagePicker'
+  pod 'GooglePlaces'
+  pod 'GooglePlacePicker'
+  pod 'GoogleMaps'
+  pod 'ParseFacebookUtilsV4'
+  
 end

@@ -7,14 +7,12 @@
 //
 
 import UIKit
-import FirebaseAuth
-import FirebaseDatabase
 import ProgressHUD
 import NotificationBannerSwift
+import Parse
 
 class CreateUsernameViewController: UIViewController,UITextFieldDelegate {
 
-    var user: FUser!
     
     // MARK: - Outlets
     
@@ -66,7 +64,7 @@ class CreateUsernameViewController: UIViewController,UITextFieldDelegate {
             return
         }
         
-        let fieldTextLength = usernameTextField.text!.characters.count
+        let fieldTextLength = usernameTextField.text!.count
         
         if  fieldTextLength < 4  {
             let banner = StatusBarNotificationBanner(title: "Username is too short.", style: .danger)
@@ -86,38 +84,46 @@ class CreateUsernameViewController: UIViewController,UITextFieldDelegate {
             return
         }
         
+        // save username in user profile
+        let user = PFUser.current()!
+        user.username = usernameTextField.text!.trimmingCharacters(in: CharacterSet.whitespaces)
         
-        self.updateUsername()
+        user.saveInBackground (block: { (success, error) -> Void in
+            if success{
+                ProgressHUD.dismiss()
+                // hide keyboard
+                self.view.endEditing(true)
+                
+                // remember logged in user
+                UserDefaults.standard.set(user.username, forKey: "username")
+                UserDefaults.standard.synchronize()
+                ProgressHUD.dismiss()
+                
+                //Proceed to Interests Screen
+                self.performSegue(withIdentifier: Constants.Segue.toAddInterests, sender: self)
+                
+                
+                
+                
+            } else {
+                
+                // show alert message
+                let banner = StatusBarNotificationBanner(title:  error!.localizedDescription, style: .danger)
+                banner.show()
+                
+                
+                
+            }
+            
+        })
+        
+        
 
     }
     
     
     //MARK: - Functions
-    
-    func updateUsername() {
-        
-        if self.usernameTextField.text != nil {
-            let username = usernameTextField.text?.trimmingCharacters(in: CharacterSet.whitespaces)
-            let newDate = dateFormatter().string(from: Date())
-            
-            updateUser(withValues: [kUSERNAME: username!, kUPDATEDAT: newDate], withBlock: { (success) in
-                if success {
-                    ProgressHUD.dismiss()
-                    
-                    self.usernameTextField.text = nil
-                    self.user = FUser.currentUser()
-                    self.view.endEditing(false)
-                    
-                    print("Elvis: Username is \(String(describing: username!))")
-                    
-                    //Proceed to Interests Screen
-                    self.performSegue(withIdentifier: Constants.Segue.toAddInterestsFB, sender: self)
 
-                    
-                }
-            })
-        }
-    }
     
     // hide keyboard func
     @objc func hideKeyboard(_ recognizer : UITapGestureRecognizer) {

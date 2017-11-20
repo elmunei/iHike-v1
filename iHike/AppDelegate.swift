@@ -8,12 +8,16 @@
 
 import UIKit
 import CoreLocation
-import Firebase
-import FirebaseDatabase
-import FirebaseAuth
+import Parse
 import NotificationCenter
 import FBSDKCoreKit
 import UserNotifications
+import GooglePlaces
+import GooglePlacePicker
+import GoogleMaps
+import Parse
+import ProgressHUD
+import ParseFacebookUtilsV4
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,17 +27,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // Firebase
-        FirebaseApp.configure()
-        Database.database().isPersistenceEnabled = true
+        //Google Places
+        GMSPlacesClient.provideAPIKey("AIzaSyCrzYPqCDvit7DFbL8TvEtBS72FMast4NI")
+        GMSServices.provideAPIKey("AIzaSyCrzYPqCDvit7DFbL8TvEtBS72FMast4NI")
+        
         
         //Facebook
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        //User Defaults
-        let initialViewController = UIStoryboard.initialViewController(for: .login)
-        self.window?.rootViewController = initialViewController
-        self.window?.makeKeyAndVisible()
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore()
+        
+        
+
+        // Initialize Parse.
+        
+        let parseConfig = ParseClientConfiguration {(ParseMutableClientConfiguration)  in
+            
+            
+            //Accessing pikicha via id & keys
+            ParseMutableClientConfiguration.applicationId = "HtsKA78vlD9ElqsSeuZwvYG92V35KAuqfN0frJDL"
+            ParseMutableClientConfiguration.clientKey = "GNCWe7gUjtVs10Zf2VDXmLwB1nFSGDKVPbY5mm8C"
+            ParseMutableClientConfiguration.server = "https://parseapi.back4app.com/"
+            ParseMutableClientConfiguration.isLocalDatastoreEnabled = true
+            
+            
+        }
+        
+        Parse.initialize(with: parseConfig)
+        
+        
+        // Track statistics on application openings.
+        PFAnalytics.trackAppOpened(launchOptions: launchOptions)
+        
+        //Facebook
+        PFFacebookUtils.initializeFacebook(applicationLaunchOptions: launchOptions)
+        // call login function
+        login()
         
         return true
     }
@@ -53,7 +83,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        // Facebook
+        FBSDKAppEvents.activateApp()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -70,6 +101,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return result
     }
+    
+    
+    func login() {
+        
+        // remember user's login
+        let username : String? = UserDefaults.standard.string(forKey: "username")
+        
+        // if logged in
+        let initialViewController: UIViewController
+        
+        if username != nil {
+            
+            ProgressHUD.dismiss()
+            
+            initialViewController = UIStoryboard.initialViewController(for: .main)
+        } else {
+            initialViewController = UIStoryboard.initialViewController(for: .login)
+        }
+            window?.rootViewController = initialViewController
+            window?.makeKeyAndVisible()
+        }
+        
+    
     
     
 }

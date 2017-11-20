@@ -7,14 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8503A5C71FC2C6CA00A921CE /* ResetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8503A5C61FC2C6CA00A921CE /* ResetPassword.swift */; };
 		85133D441FB4947000AA9678 /* RequestLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85133D3F1FB4946E00AA9678 /* RequestLocationVC.swift */; };
 		85133D451FB4947000AA9678 /* UsernameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85133D401FB4946E00AA9678 /* UsernameVC.swift */; };
 		85133D471FB4947000AA9678 /* InterestsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85133D421FB4946F00AA9678 /* InterestsVC.swift */; };
 		85133D4A1FB4972600AA9678 /* CreateAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85133D491FB4972600AA9678 /* CreateAccountVC.swift */; };
-		85133D531FB497D100AA9678 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85133D4D1FB497CF00AA9678 /* Download.swift */; };
-		85133D541FB497D100AA9678 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85133D4F1FB497D000AA9678 /* Camera.swift */; };
-		85133D551FB497D100AA9678 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85133D501FB497D000AA9678 /* Post.swift */; };
-		85133D561FB497D100AA9678 /* FUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85133D511FB497D100AA9678 /* FUser.swift */; };
 		85133D571FB497D100AA9678 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85133D521FB497D100AA9678 /* Utilities.swift */; };
 		85133D591FB498E500AA9678 /* EmailSignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85133D581FB498E500AA9678 /* EmailSignupVC.swift */; };
 		8517B2291FB1E6D200320A09 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 856308941FB1BCEB00DD464F /* GoogleService-Info.plist */; };
@@ -25,9 +22,14 @@
 		8517B2371FB21AC000320A09 /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8517B2361FB21AC000320A09 /* FindFriendsViewController.swift */; };
 		8517B2391FB21F2500320A09 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8517B2381FB21F2500320A09 /* MainTabBarController.swift */; };
 		8517B23B1FB2530800320A09 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8517B23A1FB2530800320A09 /* CreatePostViewController.swift */; };
-		8517B23D1FB2581500320A09 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8517B23C1FB2581500320A09 /* CameraViewController.swift */; };
 		8517B23F1FB2E14700320A09 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8517B23E1FB2E14700320A09 /* MyProfileViewController.swift */; };
 		8517B2411FB31CA300320A09 /* ETRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8517B2401FB31CA300320A09 /* ETRadioButton.swift */; };
+		852AD7141FB9C93400EAA17A /* LandingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852AD7131FB9C93400EAA17A /* LandingVC.swift */; };
+		853F2B2D1FBC79EF00001B86 /* IHPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F2B2C1FBC79EF00001B86 /* IHPhotoHelper.swift */; };
+		853F2B331FBDA0AD00001B86 /* NearbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F2B321FBDA0AD00001B86 /* NearbyViewController.swift */; };
+		853F2B351FBDAD2100001B86 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 853F2B341FBDA8B800001B86 /* Home.storyboard */; };
+		853F2B391FBDB25100001B86 /* homeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F2B381FBDB25100001B86 /* homeCell.swift */; };
+		853F2B3B1FBDB26900001B86 /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F2B3A1FBDB26900001B86 /* PostVC.swift */; };
 		856308961FB1C48200DD464F /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 856308951FB1C48200DD464F /* Login.storyboard */; };
 		856308981FB1C4E700DD464F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856308971FB1C4E700DD464F /* LoginViewController.swift */; };
 		8563089E1FB1C80F00DD464F /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8563089A1FB1C80E00DD464F /* Quicksand-Regular.ttf */; };
@@ -50,15 +52,12 @@
 
 /* Begin PBXFileReference section */
 		3F70B19BFFB39237649A3494 /* Pods-iHike.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iHike.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iHike/Pods-iHike.debug.xcconfig"; sourceTree = "<group>"; };
+		8503A5C61FC2C6CA00A921CE /* ResetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPassword.swift; sourceTree = "<group>"; };
 		85133D3F1FB4946E00AA9678 /* RequestLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestLocationVC.swift; sourceTree = "<group>"; };
 		85133D401FB4946E00AA9678 /* UsernameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameVC.swift; sourceTree = "<group>"; };
 		85133D421FB4946F00AA9678 /* InterestsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsVC.swift; sourceTree = "<group>"; };
 		85133D491FB4972600AA9678 /* CreateAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountVC.swift; sourceTree = "<group>"; };
-		85133D4D1FB497CF00AA9678 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		85133D4E1FB497D000AA9678 /* iHike-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "iHike-Bridging-Header.h"; sourceTree = "<group>"; };
-		85133D4F1FB497D000AA9678 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		85133D501FB497D000AA9678 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
-		85133D511FB497D100AA9678 /* FUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FUser.swift; sourceTree = "<group>"; };
 		85133D521FB497D100AA9678 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		85133D581FB498E500AA9678 /* EmailSignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignupVC.swift; sourceTree = "<group>"; };
 		8517B22C1FB2006C00320A09 /* CreateUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUsernameViewController.swift; sourceTree = "<group>"; };
@@ -68,9 +67,14 @@
 		8517B2361FB21AC000320A09 /* FindFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
 		8517B2381FB21F2500320A09 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		8517B23A1FB2530800320A09 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
-		8517B23C1FB2581500320A09 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		8517B23E1FB2E14700320A09 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		8517B2401FB31CA300320A09 /* ETRadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETRadioButton.swift; sourceTree = "<group>"; };
+		852AD7131FB9C93400EAA17A /* LandingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingVC.swift; sourceTree = "<group>"; };
+		853F2B2C1FBC79EF00001B86 /* IHPhotoHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IHPhotoHelper.swift; sourceTree = "<group>"; };
+		853F2B321FBDA0AD00001B86 /* NearbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyViewController.swift; sourceTree = "<group>"; };
+		853F2B341FBDA8B800001B86 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Home.storyboard; path = /Users/elmunei/iOS/Projects/iHike/iHike/Storyboards/Home.storyboard; sourceTree = "<absolute>"; };
+		853F2B381FBDB25100001B86 /* homeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeCell.swift; sourceTree = "<group>"; };
+		853F2B3A1FBDB26900001B86 /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
 		856308941FB1BCEB00DD464F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		856308951FB1C48200DD464F /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		856308971FB1C4E700DD464F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +111,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8503A5C81FC2D53C00A921CE /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				856308971FB1C4E700DD464F /* LoginViewController.swift */,
+				85133D401FB4946E00AA9678 /* UsernameVC.swift */,
+				8517B22C1FB2006C00320A09 /* CreateUsernameViewController.swift */,
+			);
+			path = Facebook;
+			sourceTree = "<group>";
+		};
+		8503A5C91FC2D56D00A921CE /* Email */ = {
+			isa = PBXGroup;
+			children = (
+				85133D581FB498E500AA9678 /* EmailSignupVC.swift */,
+				856D7B971FB5A26E00D9B353 /* SigninViewController.swift */,
+				8503A5C61FC2C6CA00A921CE /* ResetPassword.swift */,
+				85133D491FB4972600AA9678 /* CreateAccountVC.swift */,
+				8517B23E1FB2E14700320A09 /* MyProfileViewController.swift */,
+			);
+			path = Email;
+			sourceTree = "<group>";
+		};
 		8563088C1FB1BC3600DD464F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -114,7 +140,8 @@
 				8517B2361FB21AC000320A09 /* FindFriendsViewController.swift */,
 				8517B2381FB21F2500320A09 /* MainTabBarController.swift */,
 				8517B23A1FB2530800320A09 /* CreatePostViewController.swift */,
-				8517B23C1FB2581500320A09 /* CameraViewController.swift */,
+				853F2B321FBDA0AD00001B86 /* NearbyViewController.swift */,
+				853F2B3A1FBDB26900001B86 /* PostVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -130,6 +157,7 @@
 		8563088E1FB1BC5000DD464F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				853F2B2C1FBC79EF00001B86 /* IHPhotoHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -141,16 +169,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		856308901FB1BC6600DD464F /* Services */ = {
+		856308901FB1BC6600DD464F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				853F2B381FBDB25100001B86 /* homeCell.swift */,
 			);
-			path = Services;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		856308911FB1BC7500DD464F /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				853F2B341FBDA8B800001B86 /* Home.storyboard */,
 				858B2D7F1FB1B55900F3FDB4 /* Main.storyboard */,
 				858B2D841FB1B55900F3FDB4 /* LaunchScreen.storyboard */,
 				856308951FB1C48200DD464F /* Login.storyboard */,
@@ -161,11 +191,7 @@
 		856308921FB1BC8900DD464F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				85133D4F1FB497D000AA9678 /* Camera.swift */,
-				85133D4D1FB497CF00AA9678 /* Download.swift */,
-				85133D511FB497D100AA9678 /* FUser.swift */,
 				85133D4E1FB497D000AA9678 /* iHike-Bridging-Header.h */,
-				85133D501FB497D000AA9678 /* Post.swift */,
 				85133D521FB497D100AA9678 /* Utilities.swift */,
 				856308941FB1BCEB00DD464F /* GoogleService-Info.plist */,
 				858B2D871FB1B55900F3FDB4 /* Info.plist */,
@@ -177,15 +203,11 @@
 		856308931FB1BC9500DD464F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				856308971FB1C4E700DD464F /* LoginViewController.swift */,
-				85133D581FB498E500AA9678 /* EmailSignupVC.swift */,
-				856D7B971FB5A26E00D9B353 /* SigninViewController.swift */,
-				85133D491FB4972600AA9678 /* CreateAccountVC.swift */,
-				8517B23E1FB2E14700320A09 /* MyProfileViewController.swift */,
+				8503A5C81FC2D53C00A921CE /* Facebook */,
+				8503A5C91FC2D56D00A921CE /* Email */,
+				852AD7131FB9C93400EAA17A /* LandingVC.swift */,
 				85133D421FB4946F00AA9678 /* InterestsVC.swift */,
 				85133D3F1FB4946E00AA9678 /* RequestLocationVC.swift */,
-				85133D401FB4946E00AA9678 /* UsernameVC.swift */,
-				8517B22C1FB2006C00320A09 /* CreateUsernameViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -240,7 +262,7 @@
 				856308931FB1BC9500DD464F /* Views */,
 				856308921FB1BC8900DD464F /* Supporting Files */,
 				856308911FB1BC7500DD464F /* Storyboards */,
-				856308901FB1BC6600DD464F /* Services */,
+				856308901FB1BC6600DD464F /* Cells */,
 				8563088F1FB1BC5B00DD464F /* Models */,
 				8563088E1FB1BC5000DD464F /* Helpers */,
 				8563088D1FB1BC4500DD464F /* Extensions */,
@@ -332,6 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				856308A01FB1C80F00DD464F /* Quicksand-Bold.ttf in Resources */,
+				853F2B351FBDAD2100001B86 /* Home.storyboard in Resources */,
 				856308961FB1C48200DD464F /* Login.storyboard in Resources */,
 				8517B2291FB1E6D200320A09 /* GoogleService-Info.plist in Resources */,
 				85AAD2391FB62CD500998BE5 /* Cube.gif in Resources */,
@@ -354,61 +377,47 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-iHike/Pods-iHike-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ALCameraViewController/ALCameraViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/DTPagerController/DTPagerController.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/ListPlaceholder/ListPlaceholder.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
+				"${BUILT_PRODUCTS_DIR}/ParseFacebookUtilsV4/ParseFacebookUtilsV4.framework",
+				"${BUILT_PRODUCTS_DIR}/ParseUI/ParseUI.framework",
 				"${BUILT_PRODUCTS_DIR}/ProgressHUD/ProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SteviaLayout/Stevia.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftGifOrigin/SwiftGifOrigin.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${BUILT_PRODUCTS_DIR}/YPImagePicker/YPImagePicker.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ALCameraViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTPagerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ListPlaceholder.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParseFacebookUtilsV4.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParseUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stevia.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftGifOrigin.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YPImagePicker.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -422,14 +431,9 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-iHike/Pods-iHike-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseAuthUI.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseFacebookAuthUI.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseGoogleAuthUI.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebasePhoneAuthUI.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseTwitterAuthUI.bundle,
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/TwitterKitResources.bundle",
-				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/TwitterShareExtensionUIResources.bundle",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -477,21 +481,22 @@
 				856D7B981FB5A26E00D9B353 /* SigninViewController.swift in Sources */,
 				856308981FB1C4E700DD464F /* LoginViewController.swift in Sources */,
 				8517B2371FB21AC000320A09 /* FindFriendsViewController.swift in Sources */,
-				85133D531FB497D100AA9678 /* Download.swift in Sources */,
+				853F2B2D1FBC79EF00001B86 /* IHPhotoHelper.swift in Sources */,
 				8517B2411FB31CA300320A09 /* ETRadioButton.swift in Sources */,
 				85133D451FB4947000AA9678 /* UsernameVC.swift in Sources */,
 				85133D591FB498E500AA9678 /* EmailSignupVC.swift in Sources */,
 				856308A71FB1D07E00DD464F /* CustomizableView.swift in Sources */,
+				853F2B391FBDB25100001B86 /* homeCell.swift in Sources */,
+				853F2B331FBDA0AD00001B86 /* NearbyViewController.swift in Sources */,
 				8517B23B1FB2530800320A09 /* CreatePostViewController.swift in Sources */,
+				853F2B3B1FBDB26900001B86 /* PostVC.swift in Sources */,
 				856308A81FB1D07E00DD464F /* CustomizableButton.swift in Sources */,
 				858B2D7C1FB1B55900F3FDB4 /* AppDelegate.swift in Sources */,
-				85133D551FB497D100AA9678 /* Post.swift in Sources */,
-				8517B23D1FB2581500320A09 /* CameraViewController.swift in Sources */,
 				85133D471FB4947000AA9678 /* InterestsVC.swift in Sources */,
 				8517B23F1FB2E14700320A09 /* MyProfileViewController.swift in Sources */,
-				85133D541FB497D100AA9678 /* Camera.swift in Sources */,
 				8517B22D1FB2006C00320A09 /* CreateUsernameViewController.swift in Sources */,
-				85133D561FB497D100AA9678 /* FUser.swift in Sources */,
+				8503A5C71FC2C6CA00A921CE /* ResetPassword.swift in Sources */,
+				852AD7141FB9C93400EAA17A /* LandingVC.swift in Sources */,
 				8517B2351FB21AAB00320A09 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

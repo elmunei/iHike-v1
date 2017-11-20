@@ -8,7 +8,7 @@
 
 import UIKit
 import MobileCoreServices
-import Firebase
+import Parse
 import ProgressHUD
 import NotificationBannerSwift
 
@@ -30,15 +30,19 @@ class SigninViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     @IBOutlet weak var signinBtn: UIBarButtonItem!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        signinBtn.isEnabled = false
+        password.becomeFirstResponder()
+        password.enablesReturnKeyAutomatically = true
         emailTxt.text = userEmail
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        ProgressHUD.dismiss()
+
     }
     
 
@@ -58,6 +62,12 @@ class SigninViewController: UIViewController, UINavigationControllerDelegate, UI
     // MARK: - Actions
 
     @IBAction func signinBtnTapped(_ sender: Any) {
+        
+       performAction()
+        
+    }
+    
+    func performAction() {
         
         ProgressHUD.show("please wait...")
         
@@ -83,24 +93,52 @@ class SigninViewController: UIViewController, UINavigationControllerDelegate, UI
             return
         }
         
-        FUser.loginUserWith(email: emailTxt.text!.trimmingCharacters(in: CharacterSet.whitespaces), password: password.text!, withBlock: { (success) in
-            
-            ProgressHUD.dismiss()
-            
-            if success {
+        let query: PFQuery = PFUser.query()!
+        query.whereKey("email", equalTo: emailTxt.text!.trimmingCharacters(in: CharacterSet.whitespaces))
+        query.findObjectsInBackground(block: {
+            (objects, error) in
+            if(error == nil){
+                if (objects!.count > 0) {
+                    let object = objects![0]
+                    let userName = object["username"] as! String
+                    PFUser.logInWithUsername(inBackground: userName, password: self.password.text!) { (user, error)  -> Void in
+                        
+                         if error == nil {
+                        // remember user or save in App Memory did the user login or not
+                        UserDefaults.standard.set(user!.username, forKey: "username")
+                        UserDefaults.standard.synchronize()
+                        
+                        ProgressHUD.show("Please wait...", interaction: false)
+                        self.emailTxt.text = nil
+                        self.password.text = nil
+                        self.view.endEditing(false)
+                        
+                        //go to app
+                        let initialViewController = UIStoryboard.initialViewController(for: .main)
+                        self.view.window?.rootViewController = initialViewController
+                        self.view.window?.makeKeyAndVisible()
+                         } else {
+                            
+                            // show alert message
+                            let banner = StatusBarNotificationBanner(title: error!.localizedDescription, style: .danger)
+                            banner.show()
+                            
+                            ProgressHUD.dismiss()
+                        }
+                    }
+                }
+            } else {
                 
-                self.emailTxt.text = nil
-                self.password.text = nil
-                self.view.endEditing(false)
-                
-                //go to app
-                let initialViewController = UIStoryboard.initialViewController(for: .main)
-                self.view.window?.rootViewController = initialViewController
-                self.view.window?.makeKeyAndVisible()
+                print("Error in retrieving \(String(describing: error))")
             }
             
         })
         
+
+    }
+    
+    
+    @IBAction func resetPassword(_ sender: Any) {
     }
     
 
@@ -120,8 +158,8 @@ class SigninViewController: UIViewController, UINavigationControllerDelegate, UI
             return true
         } else if (textField == password) {
             
-            password.resignFirstResponder()
-            
+            performAction()
+
             return true
         }
         

@@ -8,9 +8,9 @@
 
 import UIKit
 import MobileCoreServices
-import Firebase
 import ProgressHUD
 import NotificationBannerSwift
+import Parse
 
 var newUserEmail: String?
 
@@ -51,46 +51,9 @@ class CreateAccountVC: UIViewController, UINavigationControllerDelegate, UITextF
     
     @IBAction func saveBtnTapped(_ sender: Any) {
         
-        ProgressHUD.show("please wait...")
+        performAction()
         
-        // if fields are empty
-        if (emailTxt.text!.isEmpty || fullnametxt.text!.isEmpty || passwordTxt.text!.isEmpty ) {
-            
-            let banner = StatusBarNotificationBanner(title: "One or more fields is empty. Please try again.", style: .danger)
-            banner.show()
-            
-            ProgressHUD.dismiss()
-            
-            return
-        }
-        
-        // if incorrect email according to regex
-        if !validateEmail(emailTxt.text!) {
-            // show alert message
-            let banner = StatusBarNotificationBanner(title: "Incorrect email format. Please try again.", style: .danger)
-            banner.show()
-            
-            ProgressHUD.dismiss()
-            
-            return
-        }
-        
-        
-        FUser.registerUserWith(email: emailTxt.text!.trimmingCharacters(in: CharacterSet.whitespaces), password: passwordTxt.text!, fullname: fullnametxt.text!, username: fullnametxt.text!.trimmingCharacters(in: CharacterSet.whitespaces), location: " ", interests: [""], avatar: " ", withBlock: { (success) in
-            
-            if success {
-                
-                ProgressHUD.dismiss()
-                
-                //post notification
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UserDidLoginNotification"), object: nil, userInfo: ["userId" : FUser.currentId()])
-                
-                //go to username screen
-               
-                self.performSegue(withIdentifier: Constants.Segue.toAddPhotoUsername, sender: self)
-                
-            }
-        })
+
         
     }
     
@@ -124,7 +87,7 @@ class CreateAccountVC: UIViewController, UINavigationControllerDelegate, UITextF
             passwordTxt.becomeFirstResponder()
             return true
         }else if (textField == passwordTxt) {
-            passwordTxt.resignFirstResponder()
+            performAction()
             return true
         }
         
@@ -132,6 +95,82 @@ class CreateAccountVC: UIViewController, UINavigationControllerDelegate, UITextF
         return false
     }
     
+    func performAction() {
+        
+        ProgressHUD.show("please wait...")
+        
+        // if fields are empty
+        if (emailTxt.text!.isEmpty || fullnametxt.text!.isEmpty || passwordTxt.text!.isEmpty ) {
+            
+            let banner = StatusBarNotificationBanner(title: "One or more fields is empty. Please try again.", style: .danger)
+            banner.show()
+            
+            ProgressHUD.dismiss()
+            
+            return
+        }
+        
+        // if incorrect email according to regex
+        if !validateEmail(emailTxt.text!) {
+            // show alert message
+            let banner = StatusBarNotificationBanner(title: "Incorrect email format. Please try again.", style: .danger)
+            banner.show()
+            
+            ProgressHUD.dismiss()
+            
+            return
+        }
+        
+        
+        // send data to server to related columns
+        let user = PFUser()
+        user.username = " "
+        user.email = emailTxt.text!.lowercased().trimmingCharacters(in: CharacterSet.whitespaces)
+        user.password = passwordTxt.text
+        user["fullname"] = fullnametxt.text!.lowercased().trimmingCharacters(in: CharacterSet.whitespaces)
+        user["gender"] = ""
+        user["interests"] = [""]
+        user["profiledescription"] = ""
+        user["friends"] = [""]
+        user["web"] = ""
+        user["location"] = ""
+        user["loginMethod"] = "email"
+        
+        
+        
+        
+        
+        // save data in server
+        user.signUpInBackground { (success, error) -> Void in
+            // Stop the spinner
+            ProgressHUD.dismiss()
+            if success {
+                print("registered")
+                
+                
+                // remember logged in user
+                UserDefaults.standard.set(user.username, forKey: "username")
+                UserDefaults.standard.synchronize()
+                
+                self.performSegue(withIdentifier: Constants.Segue.toAddPhotoUsername, sender: self)
+                
+                
+                
+                
+            } else {
+                // show alert message
+                let banner = StatusBarNotificationBanner(title: error!.localizedDescription, style: .danger)
+                banner.show()
+                
+                ProgressHUD.dismiss()
+                
+                
+                return
+                
+            }
+        }
+        
+    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         saveBtn.isEnabled = true
